@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<techniques version="2021.06.29">
+    <technique name="Voltammetric techniques">
+        <test value="1" name="Cyclic Voltammetry" id="CV">
+            <description></description>
+            <parameters>
+                <parameter name="Sensor Channel" id="SCI" type="select">
+                    <option value="0">Channel 0</option>
+                    <option value="1">Channel 1</option>
+                </parameter>
+                <parameter name="Equilibrium Time" id="TEI" type="int" min="0" max="9999" units="s" lpad="4|0"/>
+                <parameter name="Starting Voltage" id="SVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+                <parameter name="Vertex Voltage" id="VVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+                <parameter name="Ending Voltage" id="EVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+                <!--<parameter name="Rheostat Resistance" id="RRI" type="int" min="0" max="9999" units="&#8486;" lpad="4|0"/>-->
+                <parameter name="Voltage Sweep Rate" id="SRI" type="select" units="mV/s" lpad="3|0">
+                    <option value="010">10</option>
+                    <option value="020">20</option>
+                    <option value="030">30</option>
+                    <option value="040">40</option>
+                    <option value="050">50</option>
+                    <option value="060">60</option>
+                    <option value="070">70</option>
+                    <option value="080">80</option>
+                    <option value="090">90</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="300">300</option>
+                    <option value="350">350</option>
+                    <option value="400">400</option>
+                    <option value="450">450</option>
+                    <option value="500">500</option>
+                </parameter>
+                <parameter name="TIA Gain Resistor" id="RTIAI" type="select" units="k&#8486;" lpad="2|0">
+                    <option value="00">Open(not recommended)</option>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">6</option>
+                    <option value="06">8</option>
+                    <option value="07">10</option>
+                    <option value="08">12</option>
+                    <option value="09">16</option>
+                    <option value="10">20</option>
+                    <option value="11">24</option>
+                    <option value="12">30</option>
+                    <option value="13">32</option>
+                    <option value="14">40</option>
+                    <option value="15">48</option>
+                    <option value="16">64</option>
+                    <option value="17">85</option>
+                    <option value="18">96</option>
+                    <option value="19">100</option>
+                    <option value="20">120</option>
+                    <option value="21">128</option>
+                    <option value="22">160</option>
+                    <option value="23">196</option>
+                    <option value="24">256</option>
+                    <option value="25">512</option>
+                </parameter>
+            </parameters>
+            <timing equation="(abs([SVI]-[VVI])+abs([VVI]-[EVI]))/[SRI]+[TEI]"/>
+            <outputs>
+                <output id="RANGE" type="list" separator=",">
+                    <field label="Start" type="float" units="mV"/>
+                    <field label="Vertex" type="float" units="mV"/>
+                    <field label="End" type="float" units="mV"/>
+                </output>
+                <output id="RGAIN">
+                    <field label="Gain" type="float" units="&#8486;"/>
+                </output>
+                <output id="RESULTS" type="matrix" col-separator="," row-separator="&#10;">
+                    <field label="Voltage" units="V" type="float"/>
+                    <field label="Current" units="&#181;A" type="float"/>
+                </output>
+            </outputs>
+            <plots>
+                <plot title="Voltammogram" x-label="Voltage (V)" y-label="Current (&#181;A)">
+                    <series>
+                        <x output="RESULTS" field="Voltage" />
+                        <y output="RESULTS" field="Current" />
+                    </series>
+                </plot>
+            </plots>
+            <presets>
+                <preset name="Example">
+                    <parameter id="SCI" value="0"/>
+                    <parameter id="TEI" value="5"/>
+                    <!--<parameter id="RRI" value="0"/>-->
+                    <parameter id="SVI" value="-400"/>
+                    <parameter id="VVI" value="400"/>
+                    <parameter id="EVI" value="-400"/>
+                    <parameter id="SRI" value="100"/>
+                    <parameter id="RTIAI" value="01"/>
+                </preset>
+            </presets>
+        </test>
+    </technique>
+    <technique name="Pulsed techniques">
+        <test value="2" name="Square-wave Voltammetry" id="SWV">
+            <description></description>
+            <parameters>
+                <parameter name="Sensor Channel" id="SCI" type="select">
+                    <option value="0">Channel 0</option>
+                    <option value="1">Channel 1</option>
+                </parameter>
+                <parameter name="Equilibrium Time" id="TEI" type="int" min="0" max="9999" units="s" lpad="4|0"/>
+                <parameter name="Starting Voltage" id="SVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+                <parameter name="Ending Voltage" id="EVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+                <parameter name="Squarewave Amplitude" id="AMPI" type="int" min="0" max="999" units="mV" lpad="3|0"/>
+                <parameter name="Voltage Step" id="STEPI" type="int" min="0" max="999" units="mV" lpad="3|0"/>
+                <parameter name="Squarewave Frequency" id="FREQI" type="int" min="0" max="99999" units="Hz" lpad="5|0"/>
+                <parameter name="TIA Gain Resistor" id="RTIAI" type="select" units="k&#8486;" lpad="2|0">
+                    <option value="00">Open(not recommended)</option>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">6</option>
+                    <option value="06">8</option>
+                    <option value="07">10</option>
+                    <option value="08">12</option>
+                    <option value="09">16</option>
+                    <option value="10">20</option>
+                    <option value="11">24</option>
+                    <option value="12">30</option>
+                    <option value="13">32</option>
+                    <option value="14">40</option>
+                    <option value="15">48</option>
+                    <option value="16">64</option>
+                    <option value="17">85</option>
+                    <option value="18">96</option>
+                    <option value="19">100</option>
+                    <option value="20">120</option>
+                    <option value="21">128</option>
+                    <option value="22">160</option>
+                    <option value="23">196</option>
+                    <option value="24">256</option>
+                    <option value="25">512</option>
+                </parameter>
+            </parameters>
+            <timing equation="(abs([SVI]-[EVI]))/([STEPI]*[FREQI])+[TEI]"/>
+            <outputs>
+                <output id="RANGE" type="list" separator=",">
+                    <field label="Start" type="float" units="mV"/>
+                    <field label="End" type="float" units="mV"/>
+                </output>
+                <output id="RGAIN">
+                    <field label="Gain" type="float" units="&#8486;"/>
+                </output>
+                <output id="RESULTS" type="matrix" col-separator="," row-separator="&#10;">
+                    <field label="Voltage" units="V" type="float"/>
+                    <field label="Current" units="&#181;A" type="float"/>
+                </output>
+            </outputs>
+            <plots>
+                <plot title="Voltammogram" x-label="Voltage (V)" y-label="Current (&#181;A)">
+                    <series>
+                        <x output="RESULTS" field="Voltage" />
+                        <y output="RESULTS" field="Current" />
+                    </series>
+                </plot>
+            </plots>
+            <presets>
+                <preset name="Example">
+                    <parameter id="SCI" value="0"/>
+                    <parameter id="TEI" value="5"/>
+                    <parameter id="SVI" value="-400"/>
+                    <parameter id="EVI" value="400"/>
+                    <parameter id="AMPI" value="100"/>
+                    <parameter id="STEPI" value="5"/>
+                    <parameter id="FREQI" value="50"/>
+                    <parameter id="RTIAI" value="01"/>
+                </preset>
+            </presets>
+        </test>
+    </technique>
+    <technique name="Other">
+        <test value="3" name="Electrochemical Impedance Spectroscopy" id="EIS">
+            <description></description>
+            <parameters>
+                <parameter name="Sensor Channel" id="SCI" type="select">
+                    <option value="0">Channel 0</option>
+                    <option value="1">Channel 1</option>
+                </parameter>
+                <parameter name="Lower-bound Frequency" id="LBF" type="int" min="1" max="250000" units="Hz" lpad="6|0"/>
+                <parameter name="Upper-bound Frequency" id="UBF" type="int" min="1" max="250000" units="Hz" lpad="6|0"/>
+                <parameter name="Points-per-Decade" id="PPD" type="int" min="1" max="99" lpad="2|0"/>
+            </parameters>
+            <outputs>
+                <output id="RESULTS" type="matrix" col-separator="," row-separator="&#10;">
+                    <field label="Frequency" units="Hz" type="float" />
+                    <field label="Magnitude" units="&#8486;" type="float" />
+                    <field label="Phase" units="&#176;" type="float" />
+                    <field label="Real Magnitude" units="&#8486;" type="float" />
+                    <field label="Imaginary Magnitude" units="&#8486;" type="float" />
+                </output>
+            </outputs>
+            <plots>
+                <plot title="Bode Magnitude" x-label="Frequency (Hz)" y-label="Magnitude (&#8486;)">
+                    <series>
+                        <x output="RESULTS" field="Frequency" />
+                        <y output="RESULTS" field="Magnitude" />
+                    </series>
+                </plot>
+                <plot title="Bode Phase" x-label="Frequency (Hz)" y-label="Phase (&#176;)">
+                    <series>
+                        <x output="RESULTS" field="Frequency" />
+                        <y output="RESULTS" field="Phase" />
+                    </series>
+                </plot>
+                <plot title="Nyquist" x-label="Real Magnitude (&#8486;)" y-label="Imaginary Magnitude (&#8486;)">
+                    <series>
+                        <x output="RESULTS" field="Real Magnitude" />
+                        <y output="RESULTS" field="Imaginary Magnitude" />
+                    </series>
+                </plot>
+            </plots>
+            <presets>
+                <preset name="Example">
+                    <parameter id="SCI" value="0"/>
+                    <parameter id="LBF" value="4000"/>
+                    <parameter id="UBF" value="4500"/>
+                    <parameter id="PPD" value="5"/>
+                </preset>
+            </presets>
+        </test>
+    </technique>
+</techniques>

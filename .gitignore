@@ -1,0 +1,6 @@
+__pycache__
+dist
+cmd.bat
+/*.csv
+/*.egg-info
+/venv
