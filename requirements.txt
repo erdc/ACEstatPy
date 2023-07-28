@@ -1,5 +1,6 @@
 PyDispatcher==2.0.5
 pyserial==3.5
+pathvalidate==3.0.0
 ## Android requirements:
 # usbserial4a==0.3.0
 # usb4a==0.2.0

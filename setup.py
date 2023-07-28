@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-VERSION = '2022.4.28.1'
+VERSION = '2023.7.5.1'
 DESCRIPTION = 'A Python library used for communicating with the ACEStat.'
 
 setup(
@@ -15,7 +15,8 @@ setup(
     python_requires=">=3.6,<4",
     install_requires=[
         "PyDispatcher==2.0.5",
-        "pyserial==3.5"
+        "pyserial==3.5",
+        "pathvalidate==3.0.0"
     ],
     packages=find_packages(),
     url="",
