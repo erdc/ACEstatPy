@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-VERSION = '2023.7.5.1'
+VERSION = '2023.8.1.1'
 DESCRIPTION = 'A Python library used for communicating with the ACEStat.'
 
 setup(

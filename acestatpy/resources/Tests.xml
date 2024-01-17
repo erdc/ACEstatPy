@@ -269,6 +269,89 @@
         </preset>
       </presets>
     </test>
+    <test value="11" name="Differential Pulse Voltammetry" id="DPV">
+      <description></description>
+      <parameters>
+        <parameter name="Sensor Channel" id="SCI" type="select">
+          <option value="0">Channel 0</option>
+          <option value="1">Channel 1</option>
+        </parameter>
+        <parameter name="Starting Voltage" id="SVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+        <parameter name="Ending Voltage" id="EVI" type="int" min="-1200" max="1200" units="mV" lpad="4|0" signed="true"/>
+        <parameter name="Squarewave Amplitude" id="AMPI" type="int" min="0" max="999" units="mV" lpad="3|0"/>
+        <parameter name="Voltage Step" id="STEPI" type="int" min="10" max="100" units="mV" lpad="3|0"/>
+        <parameter name="Squarewave Frequency" id="FREQI" type="int" min="0" max="99999" units="Hz" lpad="5|0"/>
+        <parameter name="Pulse Width" id="PWI" type="int" min="10" max="100" units="ms" lpad="3|0"/>
+        <parameter name="Equilibrium Time" id="TEI" type="int" min="0" max="9999" units="s" lpad="4|0"/>
+        <parameter name="TIA Gain Resistor" id="RTIAI" type="select" units="k&#8486;" lpad="2|0">
+          <option value="00">Open(not recommended)</option>
+          <option value="01">1</option>
+          <option value="02">2</option>
+          <option value="03">3</option>
+          <option value="04">4</option>
+          <option value="05">6</option>
+          <option value="06">8</option>
+          <option value="07">10</option>
+          <option value="08">12</option>
+          <option value="09">16</option>
+          <option value="10">20</option>
+          <option value="11">24</option>
+          <option value="12">30</option>
+          <option value="13">32</option>
+          <option value="14">40</option>
+          <option value="15">48</option>
+          <option value="16">64</option>
+          <option value="17">85</option>
+          <option value="18">96</option>
+          <option value="19">100</option>
+          <option value="20">120</option>
+          <option value="21">128</option>
+          <option value="22">160</option>
+          <option value="23">196</option>
+          <option value="24">256</option>
+          <option value="25">512</option>
+        </parameter>
+        <parameter name="Printing Mode" id="PMI" type="static" value="1">
+          <option value="0">Raw-ADC</option>
+          <option value="1">Converted</option>
+        </parameter>
+      </parameters>
+      <timing equation="(abs([SVI]-[EVI]))/([STEPI]*[FREQI])+[TEI]"/>
+      <outputs>
+        <output id="RANGE" type="list" separator=",">
+          <field label="Start" type="float" units="mV"/>
+          <field label="End" type="float" units="mV"/>
+        </output>
+        <output id="RGAIN">
+          <field label="Gain" type="float" units="&#8486;"/>
+        </output>
+        <output id="RESULTS" type="matrix" col-separator="," row-separator="&#10;">
+          <field label="Voltage" units="V" type="float"/>
+          <field label="Current" units="&#181;A" type="float"/>
+        </output>
+      </outputs>
+      <plots>
+        <plot title="Voltammogram" x-label="Voltage (V)" y-label="Current (&#181;A)">
+          <series>
+            <x output="RESULTS" field="Voltage"/>
+            <y output="RESULTS" field="Current"/>
+          </series>
+        </plot>
+      </plots>
+      <presets>
+        <preset name="Example">
+          <parameter id="SCI" value="0"/>
+          <parameter id="TEI" value="5"/>
+          <parameter id="SVI" value="-200"/>
+          <parameter id="EVI" value="500"/>
+          <parameter id="AMPI" value="50"/>
+          <parameter id="STEPI" value="10"/>
+          <parameter id="PWI" value="10"/>
+          <parameter id="FREQI" value="10"/>
+          <parameter id="RTIAI" value="01"/>
+        </preset>
+      </presets>
+    </test>
   </technique>
   <technique name="Other">
     <test value="4" name="Chrono Amperometry" id="CA">
